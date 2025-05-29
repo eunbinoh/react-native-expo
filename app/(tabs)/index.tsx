@@ -1,44 +1,32 @@
-import NewButton from "@/components/NewButton";
-import { router } from "expo-router";
-import { useState } from "react";
-import {
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import FeedList from "@/components/FeedList";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 export default function HomeScreen() {
-  const [text, setText] = useState("");
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
         <Text style={styles.text}>DPOST</Text>
       </View>
-      <View style={styles.row}>
-        <TextInput
-          value={text}
-          onChangeText={(value) => setText(value)}
-          style={styles.input}
-        />
-        <Pressable onPress={() => console.log(text)} style={styles.pressable}>
-          <Text>CLICK</Text>
-        </Pressable>
+
+      <View style={{ marginTop: 10, marginBottom: 120 }}>
+        <FeedList />
       </View>
-      <View style={styles.row}>
+
+      {/* <View style={[styles.row, { marginTop: 00 }]}>
         <NewButton
-          label="인증"
+          label="COME IN"
           size="large"
           onPress={() => router.push("/auth")}
         />
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  header: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "black",
@@ -53,18 +41,5 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     color: "white",
-  },
-  input: {
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 10,
-    fontSize: 20,
-    width: "80%",
-  },
-  pressable: {
-    backgroundColor: "gray",
-    padding: 10,
-    width: "20%",
-    alignItems: "center",
   },
 });
