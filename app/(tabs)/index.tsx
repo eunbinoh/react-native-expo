@@ -1,4 +1,5 @@
 import NewButton from "@/components/NewButton";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Pressable,
@@ -26,7 +27,11 @@ export default function HomeScreen() {
         </Pressable>
       </View>
       <View style={styles.row}>
-        <NewButton label="버튼" size="large" onPress={() => {}} />
+        <NewButton
+          label="인증"
+          size="large"
+          onPress={() => router.push("/auth")}
+        />
       </View>
     </SafeAreaView>
   );
