@@ -1,17 +1,38 @@
 import FixedBottomCTA from "@/components/FixedBottomCTA";
-import InputFiled from "@/components/InputFiled";
+import InputTypeEmail from "@/components/InputTypeEmail";
+import InputTypePwd from "@/components/InputTypePwd";
 import React from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 export default function Login() {
+  const loginForm = useForm<FormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (formValue: FormValues) => {
+    console.log(formValue);
+  };
+
   return (
-    <>
+    <FormProvider {...loginForm}>
       <View style={styles.container}>
-        <InputFiled label="이메일" placeholder="이메일을 입력해주세요." />
-        <InputFiled label="비밀번호" placeholder="비밀번호를 입력해주세요." />
+        <InputTypeEmail />
+        <InputTypePwd />
       </View>
-      <FixedBottomCTA label="로그인하기" onPress={() => {}} />
-    </>
+      <FixedBottomCTA
+        label="로그인하기"
+        onPress={loginForm.handleSubmit(onSubmit)}
+      />
+    </FormProvider>
   );
 }
 

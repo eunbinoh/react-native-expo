@@ -1,6 +1,8 @@
 const colors = {
   WH: "#FFFFFF",
   BK: "#000000",
+  RED_100: "#FFDFDF",
+  RED_500: "#FF5F5F",
   VL_100: "#FAF4FF",
   VL_200: "#E5D3F7",
   VL_300: "#C09BEF",
