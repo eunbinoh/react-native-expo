@@ -1,6 +1,7 @@
 import FixedBottomCTA from "@/components/FixedBottomCTA";
 import InputTypeEmail from "@/components/InputTypeEmail";
 import InputTypePwd from "@/components/InputTypePwd";
+import useAuth from "@/hooks/query/useAuth";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
@@ -11,6 +12,7 @@ type FormValues = {
 };
 
 export default function Login() {
+  const { loginMutation } = useAuth();
   const loginForm = useForm<FormValues>({
     defaultValues: {
       email: "",
@@ -19,7 +21,8 @@ export default function Login() {
   });
 
   const onSubmit = (formValue: FormValues) => {
-    console.log(formValue);
+    const { email, password } = formValue;
+    loginMutation.mutate({ email, password });
   };
 
   return (
