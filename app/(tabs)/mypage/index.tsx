@@ -1,9 +1,12 @@
+import useAuth from "@/hooks/query/useAuth";
 import { router, useFocusEffect } from "expo-router";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 export default function MyPageScreen() {
+  const { auth } = useAuth();
+
   useFocusEffect(() => {
-    router.replace("/auth");
+    !auth.id && router.replace("/auth");
   });
   return (
     <SafeAreaView>

@@ -1,7 +1,7 @@
 import { getMyInfo, postLogin, postSignup } from "@/api/auth";
 import queryClient from "@/api/queryClient";
 import { Profile } from "@/types";
-import { setHeader } from "@/utils/header";
+import { removeHeader, setHeader } from "@/utils/header";
 import { deleteScureStore, saveScureStore } from "@/utils/secureStore";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
@@ -52,12 +52,20 @@ function useAuth() {
   const loginMutation = useLogin();
   const signupMutation = useSignup();
 
+  const logout = () => {
+    removeHeader("Authorization");
+    deleteScureStore("accessToken");
+    queryClient.invalidateQueries({ queryKey: ["auth"] });
+  };
+
   return {
     auth: {
-      id: data?.id || 0,
+      id: data?.id || "",
+      nickname: data?.nickname || "",
     },
     loginMutation,
     signupMutation,
+    logout,
   };
 }
 

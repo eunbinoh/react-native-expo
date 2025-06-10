@@ -1,10 +1,12 @@
+import useAuth from "@/hooks/query/useAuth";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 export default function SettingScreen() {
+  const { logout } = useAuth();
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text>설정화면</Text>
+        <Text onPress={logout}>로그아웃</Text>
       </View>
     </SafeAreaView>
   );

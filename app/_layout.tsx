@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import "react-native-reanimated";
+import Toast from "react-native-toast-message";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -24,13 +24,24 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <RootLayoutNav />
+      <Toast />
     </QueryClientProvider>
   );
 }
 
 function RootLayoutNav() {
   const { auth } = useAuth();
-  console.log("auth:", auth);
+
+  useEffect(() => {
+    auth.id &&
+      Toast.show({
+        type: "success",
+        text1: `${auth.nickname}님 환영합니다!`,
+        text2: "subMessage",
+        position: "top",
+      });
+  }, [auth.id]);
+
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
