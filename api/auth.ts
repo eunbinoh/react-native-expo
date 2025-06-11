@@ -14,19 +14,17 @@ async function postSignup(body: RequestUser): Promise<void> {
 }
 
 async function postLogin(body: RequestUser): Promise<{ accessToken: string }> {
-  const { data } = await axiosInstance.post("/auth/login", body);
-
+  const { data } = await axiosInstance.post("/auth/signin", body);
   return data;
 }
 
 async function getMyInfo(): Promise<Profile> {
   const accessToken = await getScureStore("accessToken");
-  const { data } = await axiosInstance.get("/auth/myInfo", {
+  const { data } = await axiosInstance.get("/auth/me", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-
   return data;
 }
 

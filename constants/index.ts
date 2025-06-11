@@ -17,4 +17,11 @@ const colors = {
   YW_500: "#E5C84C",
 };
 
-export default colors;
+const queryKeys = {
+  AUTH: "auth",
+  GET_ME: "getMe",
+  POST: "post",
+  GET_POST: "getPost",
+};
+
+export { colors, queryKeys };

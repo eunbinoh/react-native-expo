@@ -1,11 +1,11 @@
-import colors from "@/constants";
+import { colors } from "@/constants";
 import React from "react";
 import { Pressable, PressableProps, StyleSheet, Text } from "react-native";
 
 interface NewButtonProps extends PressableProps {
   label: string;
   size?: "small" | "medium" | "large";
-  variant?: "filled" | "empty";
+  variant?: "filled" | "standard";
 }
 
 export default function NewButton({
@@ -19,12 +19,16 @@ export default function NewButton({
       style={({ pressed }) => [
         styles.container,
         styles[size],
-        styles[variant],
+        variant === "standard" ? styles.standardBox : styles.filled,
         pressed && styles.pressed,
       ]}
       {...props}
     >
-      <Text style={styles[variant]}>{label}</Text>
+      <Text
+        style={variant === "standard" ? styles.standardText : styles.filled}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 }
@@ -48,17 +52,21 @@ const styles = StyleSheet.create({
     height: 44,
     marginHorizontal: 4,
   },
+  standardBox: {
+    borderColor: colors.VL_600,
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  standardText: {
+    fontSize: 14,
+    color: colors.VL_600,
+    fontWeight: "bold",
+  },
   filled: {
     backgroundColor: colors.VL_600,
     color: colors.WH,
     fontWeight: "bold",
     fontSize: 16,
-  },
-  empty: {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderColor: colors.VL_600,
-    color: colors.VL_600,
   },
   pressed: {
     opacity: 0.7,

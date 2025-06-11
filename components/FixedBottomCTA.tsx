@@ -1,5 +1,5 @@
 import NewButton from "@/components/NewButton";
-import colors from "@/constants";
+import { colors } from "@/constants";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

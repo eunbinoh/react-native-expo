@@ -31,7 +31,6 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const { auth } = useAuth();
-
   useEffect(() => {
     auth.id &&
       Toast.show({
@@ -46,6 +45,7 @@ function RootLayoutNav() {
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="auth" options={{ headerShown: false }} />
+      <Stack.Screen name="post" options={{ headerShown: false }} />
       <Stack.Screen name="+not-found" />
     </Stack>
   );

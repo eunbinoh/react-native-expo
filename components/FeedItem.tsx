@@ -1,4 +1,4 @@
-import colors from "@/constants";
+import { colors } from "@/constants";
 import { Post } from "@/types";
 import { MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 import { useState } from "react";

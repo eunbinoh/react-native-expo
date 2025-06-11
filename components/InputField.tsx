@@ -1,4 +1,4 @@
-import colors from "@/constants";
+import { colors } from "@/constants";
 import { ForwardedRef, forwardRef } from "react";
 import {
   StyleSheet,
@@ -14,7 +14,7 @@ interface InputFieldProps extends TextInputProps {
   error?: string;
 }
 
-function InputFiled(
+export function InputField(
   { label = "", variant = "filled", error = "", ...props }: InputFieldProps,
   ref?: ForwardedRef<TextInput>
 ) {
@@ -25,6 +25,7 @@ function InputFiled(
         style={[
           styles.container,
           styles[variant],
+          props.multiline && styles.multiLine,
           Boolean(error) && styles.inputError,
         ]}
       >
@@ -80,6 +81,11 @@ const styles = StyleSheet.create({
     color: colors.RED_500,
     marginTop: 5,
   },
+  multiLine: {
+    alignItems: "flex-start",
+    paddingVertical: 10,
+    height: 200,
+  },
 });
 
-export default forwardRef(InputFiled);
+export default forwardRef(InputField);

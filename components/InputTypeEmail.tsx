@@ -1,7 +1,7 @@
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { StyleSheet } from "react-native";
-import InputFiled from "./InputFiled";
+import InputField from "./InputField";
 
 function InputTypeEmail() {
   const { control, setFocus } = useFormContext();
@@ -21,7 +21,7 @@ function InputTypeEmail() {
         },
       }}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <InputFiled
+        <InputField
           autoFocus
           label="이메일"
           placeholder="이메일을 입력해주세요."

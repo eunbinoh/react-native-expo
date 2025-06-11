@@ -1,7 +1,7 @@
 import React from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { StyleSheet } from "react-native";
-import InputFiled from "./InputFiled";
+import InputField from "./InputField";
 
 function InputTypePwdConfirm() {
   const { control } = useFormContext();
@@ -22,7 +22,7 @@ function InputTypePwdConfirm() {
         },
       }}
       render={({ field: { ref, onChange, value }, fieldState: { error } }) => (
-        <InputFiled
+        <InputField
           ref={ref}
           label="비밀번호 확인"
           placeholder="비밀번호 확인란을 입력해주세요."

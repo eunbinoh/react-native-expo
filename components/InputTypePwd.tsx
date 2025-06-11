@@ -1,7 +1,7 @@
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { StyleSheet, TextInputProps } from "react-native";
-import InputFiled from "./InputFiled";
+import InputField from "./InputField";
 
 interface Props {
   submitBehavior?: TextInputProps["submitBehavior"];
@@ -22,7 +22,7 @@ function InputTypePwd({ submitBehavior = "blurAndSubmit" }: Props) {
         },
       }}
       render={({ field: { ref, onChange, value }, fieldState: { error } }) => (
-        <InputFiled
+        <InputField
           ref={ref}
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요."

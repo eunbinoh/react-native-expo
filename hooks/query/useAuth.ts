@@ -1,8 +1,13 @@
 import { getMyInfo, postLogin, postSignup } from "@/api/auth";
 import queryClient from "@/api/queryClient";
+import { queryKeys } from "@/constants";
 import { Profile } from "@/types";
 import { removeHeader, setHeader } from "@/utils/header";
-import { deleteScureStore, saveScureStore } from "@/utils/secureStore";
+import {
+  deleteScureStore,
+  getScureStore,
+  saveScureStore,
+} from "@/utils/secureStore";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useEffect } from "react";
@@ -23,7 +28,7 @@ function useLogin() {
     onSuccess: async ({ accessToken }) => {
       setHeader("Authorization", `Bearer ${accessToken}`);
       await saveScureStore("accessToken", accessToken);
-      queryClient.fetchQuery({ queryKey: ["auth", "myInfo"] });
+      queryClient.fetchQuery({ queryKey: [queryKeys.AUTH, queryKeys.GET_ME] });
       router.replace("/");
     },
     onError: (error) => {
@@ -33,13 +38,23 @@ function useLogin() {
 }
 
 function useGetMyInfo() {
-  const { data, isError } = useQuery<Profile>({
+  const { data, isError, isSuccess } = useQuery<Profile>({
     queryFn: getMyInfo,
-    queryKey: ["auth", "myInfo"],
+    queryKey: [queryKeys.AUTH, queryKeys.GET_ME],
   });
 
   useEffect(() => {
+    (async () => {
+      if (isSuccess) {
+        const accessToken = await getScureStore("accessToken");
+        setHeader("Authorization", `Bearer ${accessToken}`);
+      }
+    })();
+  }, [isSuccess]);
+
+  useEffect(() => {
     if (isError) {
+      removeHeader("Authorization");
       deleteScureStore("accessToken");
     }
   }, [isError]);
@@ -55,7 +70,7 @@ function useAuth() {
   const logout = () => {
     removeHeader("Authorization");
     deleteScureStore("accessToken");
-    queryClient.invalidateQueries({ queryKey: ["auth"] });
+    queryClient.resetQueries({ queryKey: [queryKeys.AUTH] });
   };
 
   return {

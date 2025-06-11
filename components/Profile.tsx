@@ -1,4 +1,4 @@
-import colors from "@/constants";
+import { colors } from "@/constants";
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 interface ProfileProps {
