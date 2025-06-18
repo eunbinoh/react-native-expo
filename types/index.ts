@@ -34,6 +34,11 @@ interface CreatePostDto {
   voteOptions?: VoteOption[];
 }
 
+type RequestUpdatePost = {
+  id: number;
+  body: CreatePostDto;
+};
+
 interface CreateCommentDto {
   content: string;
   postId: number;
@@ -82,14 +87,15 @@ interface Post {
 }
 
 export type {
-  Profile,
+  Comment,
+  CreateCommentDto,
+  CreatePostDto,
+  CreateVoteDto,
+  ImageUri,
+  Post,
   PostVote,
   PostVoteOption,
-  CreatePostDto,
-  CreateCommentDto,
-  CreateVoteDto,
-  Post,
-  Comment,
-  ImageUri,
+  Profile,
+  RequestUpdatePost,
   VoteOption,
 };

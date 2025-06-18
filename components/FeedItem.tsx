@@ -1,6 +1,10 @@
 import { colors } from "@/constants";
+import useAuth from "@/hooks/query/useAuth";
+import useDeletePost from "@/hooks/query/useDeletePost";
 import { Post } from "@/types";
-import { MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
+import { useActionSheet } from "@expo/react-native-action-sheet";
+import { Ionicons, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Profile from "./Profile";
@@ -14,6 +18,33 @@ export default function FeedItem({ post }: FeedItemProps) {
   const [likeCount, setLikeCount] = useState(post.likes.length);
   const [commentCount, setCommentCount] = useState(post.commentCount);
   const [viewCount, setViewCount] = useState(post.viewCount);
+  const { auth } = useAuth();
+  const { showActionSheetWithOptions } = useActionSheet();
+  const deletePost = useDeletePost();
+
+  const handleOptionPress = () => {
+    const options = ["삭제", "수정", "취소"];
+    const destructiveButtonIndex = 0;
+    const cancelButtonIndex = 2;
+
+    showActionSheetWithOptions(
+      { options, destructiveButtonIndex, cancelButtonIndex },
+      (selectedIndex?: number) => {
+        switch (selectedIndex) {
+          case destructiveButtonIndex:
+            deletePost.mutate(post.id);
+            break;
+          case 1:
+            router.push(`/post/edit/${post.id}`);
+            break;
+          case cancelButtonIndex:
+            break;
+          default:
+            break;
+        }
+      }
+    );
+  };
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -22,6 +53,18 @@ export default function FeedItem({ post }: FeedItemProps) {
           nickname={post.author.nickname}
           imageUri={post.author.imageUri}
           createdAt={post.createdAt}
+          option={
+            auth.id !== post.author.id && (
+              <Ionicons
+                name="ellipsis-vertical"
+                size={24}
+                color={colors.BK}
+                onPress={() => {
+                  handleOptionPress();
+                }}
+              />
+            )
+          }
         />
         <Text style={styles.title}>{post.title}</Text>
         <Text numberOfLines={3} style={styles.description}>
@@ -59,17 +102,6 @@ export default function FeedItem({ post }: FeedItemProps) {
         </Pressable>
       </View>
     </View>
-
-    // <View style={styles.row}>
-    // <TextInput
-    //   value={text}
-    //   onChangeText={(value) => setText(value)}
-    //   style={styles.input}
-    // />
-    // <Pressable onPress={() => console.log(text)} style={styles.pressable}>
-    //   <Text>CLICK</Text>
-    // </Pressable>
-    // </View>
   );
 }
 const styles = StyleSheet.create({
